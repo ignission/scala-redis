@@ -1,10 +1,12 @@
+import sbt.Keys._
+
 name := "RedisClient"
+version := "3.30.1"
 
 lazy val redisClient = (project in file(".")).settings(coreSettings : _*)
 
 lazy val commonSettings: Seq[Setting[_]] = Seq(
-  organization := "net.debasishg",
-  version := "3.30",
+  organization := "tech.ignission",
   scalaVersion := "2.12.10",
   crossScalaVersions := Seq("2.12.11", "2.11.12", "2.10.7", "2.13.2"),
 
@@ -36,34 +38,22 @@ lazy val coreSettings = commonSettings ++ Seq(
     })
   ,
 
-  publishTo := version { (v: String) =>
-    val nexus = "https://oss.sonatype.org/"
-    if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
-    else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-  }.value,
-  credentials += Credentials(Path.userHome / ".sbt" / "sonatype.credentials"),
+  isSnapshot := version.value endsWith "SNAPSHOT",
+  ThisBuild / publishTo := sonatypePublishToBundle.value,
   publishMavenStyle := true,
-  publishArtifact in Test := false,
-  pomIncludeRepository := { repo => false },
-  pomExtra := (
-    <url>https://github.com/debasishg/scala-redis</url>
-    <licenses>
-      <license>
-        <name>Apache 2.0 License</name>
-        <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-        <distribution>repo</distribution>
-      </license>
-    </licenses>
-    <scm>
-      <url>git@github.com:debasishg/scala-redis.git</url>
-      <connection>scm:git:git@github.com:debasishg/scala-redis.git</connection>
-    </scm>
-    <developers>
-      <developer>
-        <id>debasishg</id>
-        <name>Debasish Ghosh</name>
-        <url>http://debasishg.blogspot.com</url>
-      </developer>
-    </developers>),
+  Test / publishArtifact := false,
+  Compile / packageDoc / publishArtifact := true,
+  Compile / packageSrc / publishArtifact := true,
+  pomIncludeRepository := { _ => false },
+  publishConfiguration := publishConfiguration.value.withOverwrite(true),
+  publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
+  homepage := Some(url("https://github.com/ignission")),
+  Compile / doc / sources := Seq.empty,
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/ignission/scala-redis"),
+      "scm:git:git@github.com/ignission/scala-redis.git"
+    )
+  ),
   unmanagedResources in Compile += baseDirectory.map( _ / "LICENSE" ).value
 )
