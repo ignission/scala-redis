@@ -21,6 +21,7 @@ project/activator-sbt*
 # Metals
 .metals/
 .bloop/
+.bsp/
 
 # Mac
 .DS_Store
