@@ -30,7 +30,7 @@ Add to `build.sbt`
 
 ```scala
 libraryDependencies ++= Seq(
-    "net.debasishg" %% "redisclient" % "3.30"
+  "tech.ignission" %% "redisclient" % "3.30.1"
 )
 ```
 
