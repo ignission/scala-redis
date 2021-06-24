@@ -48,6 +48,7 @@ lazy val coreSettings = commonSettings ++ Seq(
   publishConfiguration := publishConfiguration.value.withOverwrite(true),
   publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
   homepage := Some(url("https://github.com/ignission")),
+  licenses := Seq("MIT" -> url("https://opensource.org/licenses/MIT")),
   Compile / doc / sources := Seq.empty,
   scmInfo := Some(
     ScmInfo(
@@ -55,5 +56,12 @@ lazy val coreSettings = commonSettings ++ Seq(
       "scm:git:git@github.com/ignission/scala-redis.git"
     )
   ),
-  unmanagedResources in Compile += baseDirectory.map( _ / "LICENSE" ).value
+  developers := List(
+    Developer(
+      id = "shoma416",
+      name = "Shoma Nishitateno",
+      email = "shoma416@gmail.com",
+      url = url("https://github.com/shomatan")
+    )
+  )
 )
