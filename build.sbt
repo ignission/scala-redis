@@ -8,9 +8,9 @@ lazy val redisClient = (project in file(".")).settings(coreSettings : _*)
 lazy val commonSettings: Seq[Setting[_]] = Seq(
   organization := "tech.ignission",
   scalaVersion := "2.12.10",
-  crossScalaVersions := Seq("2.12.11", "2.11.12", "2.10.7", "2.13.2"),
+  crossScalaVersions := Seq("2.12.11", "2.11.12", "2.10.7", "2.13.6"),
 
-  scalacOptions in Compile ++= Seq( "-unchecked", "-feature", "-language:postfixOps", "-deprecation" ),
+  Compile / scalacOptions  ++= Seq( "-unchecked", "-feature", "-language:postfixOps", "-deprecation" ),
 
   resolvers ++= Seq(
     ("typesafe repo" at "http://repo.typesafe.com/typesafe/releases/").withAllowInsecureProtocol(true)
@@ -65,3 +65,5 @@ lazy val coreSettings = commonSettings ++ Seq(
     )
   )
 )
+
+Global / onChangedBuildSource := IgnoreSourceChanges
