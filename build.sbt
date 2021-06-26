@@ -1,7 +1,7 @@
 import sbt.Keys._
 
 name := "RedisClient"
-version := "3.30.1"
+version := "3.30.3"
 
 lazy val redisClient = (project in file(".")).settings(coreSettings : _*)
 
